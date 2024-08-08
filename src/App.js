@@ -22,6 +22,30 @@ const tempMovieData = [
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
+  {
+    imdbID: "tt0120737",
+    Title: "The Lord of the Rings: The Fellowship of the Ring",
+    Year: "2001",
+    Poster: "https://m.media-amazon.com/images/I/51Qvs9i5a%2BL._AC_.jpg",
+  },
+  {
+    imdbID: "tt0110912",
+    Title: "Pulp Fiction",
+    Year: "1994",
+    Poster: "https://m.media-amazon.com/images/I/51zUbui+gbL._AC_.jpg",
+  },
+  {
+    imdbID: "tt0137523",
+    Title: "Fight Club",
+    Year: "1999",
+    Poster: "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
+  },
+  {
+    imdbID: "tt0102926",
+    Title: "The Silence of the Lambs",
+    Year: "1991",
+    Poster: "https://m.media-amazon.com/images/I/51UoqRAxwEL._AC_.jpg",
+  },
 ];
 
 const tempWatchedData = [
