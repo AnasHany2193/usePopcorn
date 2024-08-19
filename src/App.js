@@ -78,7 +78,7 @@ const average = (arr) =>
 const key = "59c51f23";
 
 export default function App() {
-  const [query, setQuery] = useState("Transformers");
+  const [query, setQuery] = useState("");
   const [error, setError] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
@@ -125,8 +125,10 @@ export default function App() {
           setMovies(data.Search);
           setError("");
         } catch (err) {
-          console.error(err.message);
-          if (err.name !== "AbortError") setError(err.message);
+          if (err.name !== "AbortError") {
+            console.log(err.message);
+            setError(err.message);
+          }
         } finally {
           setIsLoading(false);
         }
@@ -138,6 +140,7 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -320,6 +323,21 @@ function MovieDetails({ selecetedId, onCloseMovie, onAddWatched, watched }) {
 
   useEffect(
     function () {
+      function callBack(e) {
+        if (e.code === "Escape") onCloseMovie();
+      }
+
+      document.addEventListener("keydown", callBack);
+
+      return function () {
+        document.removeEventListener("keydown", callBack);
+      };
+    },
+    [onCloseMovie]
+  );
+
+  useEffect(
+    function () {
       async function getMovieDetails() {
         setIsLoading(true);
 
@@ -366,6 +384,7 @@ function MovieDetails({ selecetedId, onCloseMovie, onAddWatched, watched }) {
               <p>
                 {released} &bull; {runtime}
               </p>
+              <p>{genre}</p>
               <p>
                 <span>🌟</span>
                 {imdbRating} IMDB Rating
