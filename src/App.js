@@ -111,7 +111,7 @@ export default function App() {
           setIsLoading(true);
 
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${key}&s=${query}`,
+            `https://www.omdbapi.com/?apikey=${key}&s=${query}`,
             { signal: controller.signal }
           );
 
@@ -342,7 +342,7 @@ function MovieDetails({ selecetedId, onCloseMovie, onAddWatched, watched }) {
         setIsLoading(true);
 
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${key}&i=${selecetedId}`
+          `https://www.omdbapi.com/?apikey=${key}&i=${selecetedId}`
         );
         const data = await res.json();
 
