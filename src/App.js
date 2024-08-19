@@ -52,9 +52,9 @@ const tempMovieData = [
 const tempWatchedData = [
   {
     imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
+    title: "Inception",
+    year: "2010",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
     runtime: 148,
     imdbRating: 8.8,
@@ -62,9 +62,9 @@ const tempWatchedData = [
   },
   {
     imdbID: "tt0088763",
-    Title: "Back to the Future",
-    Year: "1985",
-    Poster:
+    title: "Back to the Future",
+    year: "1985",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
     runtime: 116,
     imdbRating: 8.5,
@@ -78,12 +78,10 @@ const average = (arr) =>
 const key = "59c51f23";
 
 export default function App() {
-  const tempQuery = "Transformers";
-
   const [query, setQuery] = useState("Transformers");
   const [error, setError] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [selecetedId, setSelecetedId] = useState(null);
 
@@ -336,6 +334,10 @@ function MovieDetails({ selecetedId, onCloseMovie, onAddWatched, watched }) {
       if (!title) return;
 
       document.title = `Movie | ${title}`;
+
+      return function () {
+        document.title = "usePopcorn";
+      };
     },
     [title]
   );
