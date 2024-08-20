@@ -1,4 +1,5 @@
 import StarRating from "./StarRatings";
+import { useLocalStorageState } from "./useLocalStorageState";
 import { useMovies } from "./useMovies";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,9 +10,9 @@ const key = "59c51f23";
 
 export default function App() {
   const [query, setQuery] = useState("");
-  const [watched, setWatched] = useState([]);
   const [selecetedId, setSelecetedId] = useState(null);
   const { isLoading, movies, error } = useMovies(query);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   function handleSelectMovie(id) {
     setSelecetedId((selecetedId) => (id === selecetedId ? null : id));
