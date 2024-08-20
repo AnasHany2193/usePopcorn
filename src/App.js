@@ -1,4 +1,5 @@
 import StarRating from "./StarRatings";
+import { useMovies } from "./useMovies";
 import { useEffect, useRef, useState } from "react";
 
 const average = (arr) =>
@@ -8,11 +9,9 @@ const key = "59c51f23";
 
 export default function App() {
   const [query, setQuery] = useState("");
-  const [error, setError] = useState("");
-  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [selecetedId, setSelecetedId] = useState(null);
+  const { isLoading, movies, error } = useMovies(query);
 
   function handleSelectMovie(id) {
     setSelecetedId((selecetedId) => (id === selecetedId ? null : id));
@@ -29,55 +28,6 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-
-  useEffect(
-    function () {
-      const controller = new AbortController();
-
-      async function fetchMovies() {
-        try {
-          setError("");
-          setIsLoading(true);
-
-          const res = await fetch(
-            `https://www.omdbapi.com/?apikey=${key}&s=${query}`,
-            { signal: controller.signal }
-          );
-
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies!");
-
-          const data = await res.json();
-
-          if (data.Response === "False") throw new Error("Movie Not Found!");
-
-          setMovies(data.Search);
-          setError("");
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            console.log(err.message);
-            setError(err.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-
-      handleCloseMovie();
-      fetchMovies();
-
-      return function () {
-        controller.abort();
-      };
-    },
-    [query]
-  );
 
   return (
     <>
@@ -156,6 +106,7 @@ function Search({ query, setQuery }) {
   useEffect(function () {
     inputEl.current.focus();
   }, []);
+
   return (
     <input
       type="text"
