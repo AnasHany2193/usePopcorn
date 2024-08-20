@@ -1,76 +1,5 @@
 import StarRating from "./StarRatings";
-import { useEffect, useState } from "react";
-
-const tempMovieData = [
-  {
-    imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt0133093",
-    Title: "The Matrix",
-    Year: "1999",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt6751668",
-    Title: "Parasite",
-    Year: "2019",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt0120737",
-    Title: "The Lord of the Rings: The Fellowship of the Ring",
-    Year: "2001",
-    Poster: "https://m.media-amazon.com/images/I/51Qvs9i5a%2BL._AC_.jpg",
-  },
-  {
-    imdbID: "tt0110912",
-    Title: "Pulp Fiction",
-    Year: "1994",
-    Poster: "https://m.media-amazon.com/images/I/51zUbui+gbL._AC_.jpg",
-  },
-  {
-    imdbID: "tt0137523",
-    Title: "Fight Club",
-    Year: "1999",
-    Poster: "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
-  },
-  {
-    imdbID: "tt0102926",
-    Title: "The Silence of the Lambs",
-    Year: "1991",
-    Poster: "https://m.media-amazon.com/images/I/51UoqRAxwEL._AC_.jpg",
-  },
-];
-
-const tempWatchedData = [
-  {
-    imdbID: "tt1375666",
-    title: "Inception",
-    year: "2010",
-    poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    runtime: 148,
-    imdbRating: 8.8,
-    userRating: 10,
-  },
-  {
-    imdbID: "tt0088763",
-    title: "Back to the Future",
-    year: "1985",
-    poster:
-      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-    runtime: 116,
-    imdbRating: 8.5,
-    userRating: 9,
-  },
-];
+import { useEffect, useRef, useState } from "react";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -80,8 +9,8 @@ const key = "59c51f23";
 export default function App() {
   const [query, setQuery] = useState("");
   const [error, setError] = useState("");
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selecetedId, setSelecetedId] = useState(null);
 
@@ -222,12 +151,18 @@ function Logo() {
 }
 
 function Search({ query, setQuery }) {
+  const inputEl = useRef(null);
+
+  useEffect(function () {
+    inputEl.current.focus();
+  }, []);
   return (
     <input
-      className="search"
       type="text"
-      placeholder="Search movies..."
+      ref={inputEl}
       value={query}
+      className="search"
+      placeholder="Search movies..."
       onChange={(e) => setQuery(e.target.value)}
     />
   );
